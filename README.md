@@ -32,7 +32,7 @@ v0 = v0 + v1
 ret v0
 end
 ```
-Valor de retorno = 30 com o parametro 4
+Valor de retorno = 30 com o parametro 4  
 Valor de retorono = 385 com o parametro 10
 
 
@@ -47,7 +47,7 @@ v0 = v0 * v1
 ret v0
 end
 ```
-Valor de retorno = 24 com o parametro 4
+Valor de retorno = 24 com o parametro 4  
 Valor de retorno = 720 com o parametro 6
 
 
@@ -58,7 +58,7 @@ v0 = p0 + $1
 ret v0
 end
 ```
-Valor de retorno = -1 com o parametro -2
+Valor de retorno = -1 com o parametro -2  
 Valor de retorno = -100 com o parametro -101
 
 
@@ -79,6 +79,6 @@ v1 = call 0 v0
 ret v1
 end
 ```
-Valor de retorno = 20 com o parametro 5
-Valor de retorno = -1 com o parametro 0
+Valor de retorno = 20 com o parametro 5  
+Valor de retorno = -1 com o parametro 0  
 Valor de retorno = 108 com o parametro 27
