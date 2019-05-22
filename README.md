@@ -16,6 +16,67 @@ O programa copia imediatamente o valor do parametro para a pilha -4(%rbp), quand
 uma nova função é chamada, de modo a preservar o valor, mesmo com outras funções sendo 
 chamadas.
 
+# A linguagem SBF
+A Linguagem SBF
+Funções na linguagem SBF contém apenas atribuições, operações aritméticas, chamadas de outras funções e retorno. Todas as funções SBF são delimitadas por uma marca de início (function) e uma marca de fim (end).
+
+A linguagem tem um único tipo de dado: inteiro de 32 bits, com sinal.
+
+Variáveis locais são denotadas por vi, sendo o índice i utilizado para identificar a variável (ex. v0, v1, etc...). A linguagem permite o uso de no máximo 5 variáveis locais. As variáveis locais serão necessáriamente alocadas na pilha!
+
+As funções recebem apenas um parâmetro, denotado por p0.
+
+Constantes são escritas na forma $i, onde i é um valor inteiro, com um sinal opcional. Por exemplo, $10 representa o valor 10 e $-10 representa o valor -10.
+
+Uma atribuição tem a forma
+```
+var '=' expr
+```
+onde var é uma variável local e expr é uma operação aritmética ou uma chamada de função.
+Uma operação aritmética tem a forma
+```
+varpc op varpc
+```
+onde varpc é uma variável local, o parâmetro da função ou uma constante e op é um dos operadores: + - *
+A instrução de chamada de função tem a forma
+```
+'call' num varpc
+```
+onde num é um número que indica a função SBF que será chamada, com argumento varpc (uma variável local, o parâmetro da função ou uma constante).
+A primeira função do arquivo de entrada será a de número 0, a segunda a de número 1, e assim por diante. Uma função só pode chamar a si mesma ou funções que apareçam antes dela no arquivo de entrada. A última função do arquivo de entrada é a que será chamada pelo programa principal.
+
+Existem dois tipos de retorno: incondicional e condicional. A instrução de retorno incondicional tem a forma
+```
+'ret' varpc
+```
+Seu significado é que a função corrente deverá retornar, e o valor de retorno é o segundo operando.
+A instrução de retorno condicional tem a forma
+```
+'zret' varpc varpc
+```
+Seu significado é que, se o primeiro operando tiver valor igual a zero a função corrente deverá retornar, e o valor de retorno é o segundo operando. Não haverá retorno se o primeiro operando tiver valor diferente de zero.
+A sintaxe da linguagem SBF pode ser definida formalmente como abaixo. Note que as cadeias entre ' ' são símbolos terminais da linguagem: os caracteres ' não aparecem nos comandos SBF.
+```
+pgm	::=	func | func pgm
+func	::=	header cmds endf
+header	::=	'function\n'
+endf	::=	'end\n'
+cmds	::=	cmd'\n' | cmd '\n' cmds
+cmd	::=	att | ret | zret
+att	::=	var '=' expr
+expr	::=	oper | call
+oper	::=	varpc op varpc
+call	::=	'call' num varpc
+ret	::=	'ret' varpc
+zret	::=	'zret' varpc varpc
+var	::=	'v' num
+varpc	::=	var | 'p0' | '$' snum
+op	::=	'+' | '-' | '*'
+num	::=	digito | digito num
+snum	::=	[-] num
+digito	::=	0' | '1' | '2' | '3' | '4' | '5' | '6' | '7'| '8' | '9'
+```
+
 # Testes Realizados
 *** Teste 1 *** Função que calcula a soma dos quadrados de 1 até o valor do seu parâmetro
 ```
